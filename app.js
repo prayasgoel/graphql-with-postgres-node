@@ -1,7 +1,5 @@
 var express = require('express');
 require('custom-env').env(true)
-var graphqlHTTP = require('express-graphql');
-var { buildSchema } = require('graphql');
 const port = process.env.port;
 const router = require('./router/router');
 

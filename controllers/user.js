@@ -23,7 +23,7 @@ var schema = buildSchema(`
   }
 
   type Mutation {
-    createuser(user: UserInput): User
+    createUser(user: UserInput): User
     updateUser(id: ID!, user: UserInput): User
   }
 `);
@@ -41,6 +41,7 @@ class User {
 
 var getUser = async function (args) {
     //if get if in input then respond with that particular data
+
     if (!args.id) {
         let res = await queryExecutor.runQuery(`SELECT * from "user";`);
         let users = [];
@@ -54,7 +55,7 @@ var getUser = async function (args) {
 
 
 var saveUser = async function (args) {
-    let reqObj = args.input
+    let reqObj = args.user
     let query = {
         text: `insert into "user"(name, age, profession)  values($1, $2, $3) returning *;`,
         values: [
@@ -69,7 +70,7 @@ var saveUser = async function (args) {
 
 
 var updateUser = async function (args) {
-    let reqObj = args.input
+    let reqObj = args.user
     let query = {
         text: `update "user" set "name" = $1, age = $2, profession = $3 where id = $4 returning *;`,
         values: [
@@ -85,8 +86,8 @@ var updateUser = async function (args) {
 
 var root = {
     getUser: getUser,
-    createMessage: saveUser,
-    updateMessage: updateUser,
+    createUser: saveUser,
+    updateUser: updateUser,
 };
 
 
